@@ -8,9 +8,40 @@ import {useFonts} from "expo-font"
 import * as SplashScreen from "expo-splash-screen"
 import { useCallback } from 'react';
 import { useTheme } from 'react-native-paper';
-
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Habits from './screens/Habits';
+import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faList, faListCheck, faRepeat } from '@fortawesome/free-solid-svg-icons';
 
 const Stack = createNativeStackNavigator()
+const Tab = createMaterialBottomTabNavigator()
+
+function Navigator(){
+  const theme = useTheme();
+
+  return(
+    <Tab.Navigator
+      backBehavior='order'
+      activeColor={theme.colors.primary}
+      barStyle={{backgroundColor: '#f0f0f5'}}
+      screenOptions={{}}
+      shifting={true}
+    >
+      <Tab.Screen name='Tasks' component={Home} options={
+        {tabBarIcon: ({color}) => (
+          <FontAwesomeIcon icon={faListCheck} size={24} color={color}/>
+        ),
+        }
+      }/>
+      <Tab.Screen name='Habits' component={Habits} options={{
+        tabBarIcon: ({color}) => (
+          <FontAwesomeIcon icon={faRepeat} size={24} color={color}/>
+        )
+      }}/>
+    </Tab.Navigator>
+  )
+}
 
 export default function App() {
 
@@ -24,11 +55,12 @@ export default function App() {
     <NavigationContainer>
       <PaperProvider>
         <Stack.Navigator>
-          <Stack.Screen name='Home' component={Home} options={{
+          <Stack.Screen name='Home' component={Navigator} options={{
             title: "TODO V3",
-            contentStyle: {backgroundColor: "#fff"},
+            contentStyle: {backgroundColor: "#FFFFF"},
             headerTitleAlign: "center",
             headerShadowVisible: false,
+            navigationBarColor: "#F0F0F5",
             headerTitleStyle: {fontSize: 25, fontFamily: "Nunito"},
             }}/>
         </Stack.Navigator>
@@ -40,7 +72,5 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    justifyContent: 's',
   },
 });

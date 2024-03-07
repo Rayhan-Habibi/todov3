@@ -16,14 +16,13 @@ function Home() {
   return (
         <View style={{marginHorizontal: 20, marginBottom: 15, marginTop: 15, padding: 12, flex: 1}}>
             <ScrollView>
-                <Text style={style.greetingsFont}>Hey</Text>
-                <Text style={style.secondGreetingsText}>what's up Wei!</Text>
+                <Text style={style.greetingsFont}>Your tasks</Text>
             </ScrollView>
             <FAB 
                 icon="plus"
                 label='New Task'
                 size='small'
-                rippleColor={theme.colors.secondary}
+                rippleColor={theme.colors.primary}
                 background={{color: theme.colors.secondary}}
                 style={style.fab}
             />
