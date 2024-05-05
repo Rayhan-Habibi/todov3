@@ -1,18 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { Modal, PaperProvider } from 'react-native-paper';
+import { PaperProvider } from 'react-native-paper';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './screens/Home';
 import {useFonts} from "expo-font"
 import * as SplashScreen from "expo-splash-screen"
 import { useCallback } from 'react';
 import { useTheme } from 'react-native-paper';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Habits from './screens/Habits';
 import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faList, faListCheck, faRepeat } from '@fortawesome/free-solid-svg-icons';
+import { faListCheck, faRepeat } from '@fortawesome/free-solid-svg-icons';
+import { Provider } from 'react-redux';
+import store from './Data/store';
+import { GluestackUIProvider, Text, Box } from "@gluestack-ui/themed"
+import { config } from "@gluestack-ui/config"
 
 const Stack = createNativeStackNavigator()
 const Tab = createMaterialBottomTabNavigator()
@@ -52,20 +54,24 @@ export default function App() {
   const theme = useTheme();
 
   return (
-    <NavigationContainer>
-      <PaperProvider>
-        <Stack.Navigator>
-          <Stack.Screen name='Home' component={Navigator} options={{
-            title: "TODO V3",
-            contentStyle: {backgroundColor: "#FFFFF"},
-            headerTitleAlign: "center",
-            headerShadowVisible: false,
-            navigationBarColor: "#F0F0F5",
-            headerTitleStyle: {fontSize: 25, fontFamily: "Nunito"},
-            }}/>
-        </Stack.Navigator>
-      </PaperProvider>
-    </NavigationContainer>
+    <GluestackUIProvider config={config} >
+      <Provider store={store}>
+        <NavigationContainer>
+          <PaperProvider>
+              <Stack.Navigator>
+                <Stack.Screen name='Home' component={Navigator} options={{
+                  title: "TODO V3",
+                  contentStyle: {backgroundColor: "#FFFFF"},
+                  headerTitleAlign: "center",
+                  headerShadowVisible: false,
+                  navigationBarColor: "#F0F0F5",
+                  headerTitleStyle: {fontSize: 25, fontFamily: "Nunito"},
+                  }}/>
+              </Stack.Navigator>
+          </PaperProvider>
+        </NavigationContainer>
+      </Provider>
+    </GluestackUIProvider>
   );
 }
 
